@@ -5,6 +5,16 @@ import woods from './../../media/image/woods.jpg';
 import Footer from "../../components/Footer/Footer";
 
 class PostFull extends React.Component{
+    constructor(props) {
+        super(props);
+
+        console.log('location: ', this.props.location);
+
+
+
+        console.log('id: ', this.props.match.params.id);
+    }
+
     render(){
         return(
             <>

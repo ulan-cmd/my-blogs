@@ -6,7 +6,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        console.log(window.location.pathname)
+        // console.log(window.location.pathname)
     }
 
     render() {
@@ -14,7 +14,7 @@ class App extends React.Component {
             <>
                 <BrowserRouter>
                     <Route path="/" exact component={Main}/>
-                    <Route path="/postFull" exact component={PostFull}/>
+                    <Route path="/postFull/:id" exact component={PostFull}/>
                 </BrowserRouter>
             </>
         )
