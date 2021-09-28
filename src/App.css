@@ -28,6 +28,15 @@
   color: #61dafb;
 }
 
+.active{
+  color:red;
+}
+
+.myActiveLink{
+  color:blue;
+  font-weight: bold;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
