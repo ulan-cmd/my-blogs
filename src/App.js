@@ -7,6 +7,8 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Header from "./components/Header/Header";
 import './App.css';
 import Test2 from "./pages/Test/Test2";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -26,6 +28,7 @@ class App extends React.Component {
                         <Route component={NotFoundPage}/>
                     </Switch>
                 </BrowserRouter>
+                <ToastContainer/>
             </>
         )
     }

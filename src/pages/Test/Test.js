@@ -5,7 +5,7 @@ class Test extends React.Component{
     constructor(props) {
         super(props);
 
-        this.parseString();
+        // this.parseString();
     }
 
     parseString(){

@@ -1,8 +1,9 @@
 import React from 'react';
-import CommentsPub from "../../components/CommentsPub/CommentsPub";
 import woods from './../../media/image/woods.jpg';
 import Footer from "../../components/Footer/Footer";
-import Comments from "./Comments";
+import FormComments from "./FormComments";
+import PublishedComments from "./PublishedComments";
+import Slider from 'react-slick'
 
 class PostFull extends React.Component {
     constructor(props) {
@@ -36,10 +37,25 @@ class PostFull extends React.Component {
     }
 
     render() {
+        const settings = {
+            dots:true,
+            infinite:true,
+            speed:500,
+            slidesToShow:1,
+            slidesToScroll:1
+        }
         return (
             <>
                 <div className="w3-card-4 w3-margin w3-white">
                     <img src={woods} alt="Nature" style={{width: '100%'}}/>
+                    {/*<Slider {...settings}>*/}
+                    {/*    <div style={{background:"red"}}>*/}
+                    {/*        1*/}
+                    {/*    </div>*/}
+                    {/*    <div style={{background:"red"}}>*/}
+                    {/*        2*/}
+                    {/*    </div>*/}
+                    {/*</Slider>*/}
                     <div className="w3-container">
                         <h3><b>{this.state.post.title}</b></h3>
                         <h5>{this.state.post.tag}, <span className="w3-opacity"> {this.state.post.createdData} </span>
@@ -49,16 +65,8 @@ class PostFull extends React.Component {
                         <p>{this.state.post.desc}</p>
                         <hr/>
                     </div>
-                    <Comments/>
-
-                    {/*Published comments*/}
-                    <div className="w3-row w3-margin">
-                        <div className="w3-col w3-margin-bottom">
-                            <p><span className="w3-padding w3-tag">Published comments:</span></p>
-                            <CommentsPub/>
-                            <CommentsPub/>
-                        </div>
-                    </div>
+                    <FormComments id={this.props.match.params.id}/>
+                    <PublishedComments id={this.props.match.params.id}/>
                 </div>
                 <div className="w3-card-4 w3-margin w3-white">
                     <div className="w3-container">

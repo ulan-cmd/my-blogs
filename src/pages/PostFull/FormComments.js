@@ -1,6 +1,7 @@
 import React from 'react';
+import {toast} from 'react-toastify';
 
-class Comments extends React.Component {
+class FormComments extends React.Component {
     constructor(props) {
         super(props);
 
@@ -11,6 +12,7 @@ class Comments extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.saveComments = this.saveComments.bind(this);
     }
 
     handleChange(event){
@@ -22,9 +24,30 @@ class Comments extends React.Component {
     handleSubmit(){
        let obj = this.state;
        obj.createdDate = new Date().toLocaleString();
-      // obj.postId =
+       obj.postId = this.props.id;
 
-       console.log(obj);
+       this.saveComments(obj);
+    }
+
+    saveComments(obj){
+        const url = 'http://localhost:3001/comments';
+        let options = {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(obj)
+        }
+
+        fetch(url, options)
+            .then(response => {
+                if(response.ok){
+                    toast.success('Ваш комментарий добавлен');
+                } else {
+                    toast.error(`Что то пошло не так. Код ошибки:${response.status}`);
+                }
+            })
+
     }
 
     render() {
@@ -59,4 +82,4 @@ class Comments extends React.Component {
     }
 }
 
-export default Comments;
+export default FormComments;
