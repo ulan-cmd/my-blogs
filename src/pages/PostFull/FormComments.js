@@ -43,10 +43,12 @@ class FormComments extends React.Component {
             .then(response => {
                 if(response.ok){
                     toast.success('Ваш комментарий добавлен');
+                    return response.json();
                 } else {
                     toast.error(`Что то пошло не так. Код ошибки:${response.status}`);
                 }
             })
+            .then(data =>  this.props.reload())
 
     }
 

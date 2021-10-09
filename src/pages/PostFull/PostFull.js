@@ -4,18 +4,24 @@ import Footer from "../../components/Footer/Footer";
 import FormComments from "./FormComments";
 import PublishedComments from "./PublishedComments";
 import Slider from 'react-slick'
+import {toast} from "react-toastify";
 
 class PostFull extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            post: {}
+            post: {},
+            comments:[]
         }
+        this.reload = this.reload.bind(this);
+        this.getCommentsByPostId = this.getCommentsByPostId.bind(this);
+
     }
 
     componentDidMount() {
         this.getPostById();
+        this.getCommentsByPostId();
     }
 
     getPostById() {
@@ -36,6 +42,28 @@ class PostFull extends React.Component {
             })
     }
 
+    reload(){
+        this.getCommentsByPostId()
+    }
+
+    getCommentsByPostId(){
+        const urlParams = `postId=${this.props.match.params.id}&_sort=id&_order=desc&_page=1&_limit=3`;
+        const url = `http://localhost:3001/comments?${urlParams}`;
+
+        fetch(url)
+            .then(response => {
+                if(response.ok){
+                    this.setState({
+                        pageCount:Math.ceil(response.headers.get('X-Total-Count') / this.state.perPage)
+                    })
+                    return response.json();
+                } else {
+                    toast.error(`Что то пошло не так. Код ошибки: ${response.status}`);
+                }
+            })
+            .then(data => this.setState({comments:data}))
+    }
+
     render() {
         const settings = {
             dots:true,
@@ -48,14 +76,6 @@ class PostFull extends React.Component {
             <>
                 <div className="w3-card-4 w3-margin w3-white">
                     <img src={woods} alt="Nature" style={{width: '100%'}}/>
-                    {/*<Slider {...settings}>*/}
-                    {/*    <div style={{background:"red"}}>*/}
-                    {/*        1*/}
-                    {/*    </div>*/}
-                    {/*    <div style={{background:"red"}}>*/}
-                    {/*        2*/}
-                    {/*    </div>*/}
-                    {/*</Slider>*/}
                     <div className="w3-container">
                         <h3><b>{this.state.post.title}</b></h3>
                         <h5>{this.state.post.tag}, <span className="w3-opacity"> {this.state.post.createdData} </span>
@@ -65,8 +85,8 @@ class PostFull extends React.Component {
                         <p>{this.state.post.desc}</p>
                         <hr/>
                     </div>
-                    <FormComments id={this.props.match.params.id}/>
-                    <PublishedComments id={this.props.match.params.id}/>
+                    <FormComments id={this.props.match.params.id} reload={this.reload}/>
+                    <PublishedComments comments={this.state.comments}/>
                 </div>
                 <div className="w3-card-4 w3-margin w3-white">
                     <div className="w3-container">
