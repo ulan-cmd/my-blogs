@@ -19,18 +19,47 @@ class PublishedComments extends React.Component {
 
         this.showCommentsWithPagination = this.showCommentsWithPagination.bind(this);
         this.handlePageClick = this.handlePageClick.bind(this);
+        this.getCommentsByPostId = this.getCommentsByPostId.bind(this);
     }
 
     componentDidMount() {
-        this.showCommentsWithPagination(this.props.comments);
+        this.getCommentsByPostId();
     }
 
+    showCommentsWithPagination(data = []){
+        this.setState({
+            isLoaded:true,
+            comments:data
+        })
+        // if (this.props.comments.length === 0){
+        //     this.setState({
+        //         isLoaded:true,
+        //         comments:data
+        //     })
+        // }  else {
+        //     this.setState({
+        //         isLoaded:true,
+        //         comments:this.props.comments
+        //     })
+        // }
+    }
 
-    showCommentsWithPagination(data){
-       this.setState({
-           isLoaded:true,
-           comments:data
-       })
+    getCommentsByPostId(){
+        const urlParams = `postId=${this.props.postId}&_sort=id&_order=desc&_page=${this.state.currentPage}&_limit=${this.state.perPage}`;
+        const url = `http://localhost:3001/comments?${urlParams}`;
+
+        fetch(url)
+            .then(response => {
+                if(response.ok){
+                    this.setState({
+                        pageCount:Math.ceil(response.headers.get('X-Total-Count') / this.state.perPage)
+                    })
+                    return response.json();
+                } else {
+                    toast.error(`Что то пошло не так. Код ошибки: ${response.status}`);
+                }
+            })
+            .then(data => this.showCommentsWithPagination(data))
     }
 
     handlePageClick(e){
@@ -56,7 +85,7 @@ class PublishedComments extends React.Component {
                     <div className="w3-col w3-margin-bottom">
                         <p><span className="w3-padding w3-tag">Published comments:</span></p>
                         {
-                            this.props.comments.map(item=> (
+                            comments.map(item => (
                                 <CommentsPub key={item.id} obj={item}/>
                             ) )
                         }

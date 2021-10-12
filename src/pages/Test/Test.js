@@ -1,34 +1,12 @@
-import React from 'react';
-import * as qs from 'qs';
+import React, {Component} from "react";
+import Slider from "react-slick";
 
-class Test extends React.Component{
-    constructor(props) {
-        super(props);
+class Test extends React.Component {
+    render() {
 
-        // this.parseString();
-    }
-
-    parseString(){
-        let str = this.props.location.search;
-        console.log('Результат str: ', str);
-
-        // str = qs.parse(str, {ignoreQueryPrefix: true, parameterLimit: 1000});
-        // console.log(str);
-
-        let params = new URLSearchParams(str);
-
-        params.append('foo', 4);
-        console.log(params.has('asd'));
-        console.log(params.get('name'));
-
-        for (let p of params) {
-            console.log(p);
-        }
-
-    }
-
-    render(){
-        return <h1>Test page</h1>
+        return (
+            <h1>work</h1>
+        );
     }
 }
 

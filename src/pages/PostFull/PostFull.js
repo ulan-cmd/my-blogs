@@ -3,7 +3,6 @@ import woods from './../../media/image/woods.jpg';
 import Footer from "../../components/Footer/Footer";
 import FormComments from "./FormComments";
 import PublishedComments from "./PublishedComments";
-import Slider from 'react-slick'
 import {toast} from "react-toastify";
 
 class PostFull extends React.Component {
@@ -16,7 +15,6 @@ class PostFull extends React.Component {
         }
         this.reload = this.reload.bind(this);
         this.getCommentsByPostId = this.getCommentsByPostId.bind(this);
-
     }
 
     componentDidMount() {
@@ -65,13 +63,6 @@ class PostFull extends React.Component {
     }
 
     render() {
-        const settings = {
-            dots:true,
-            infinite:true,
-            speed:500,
-            slidesToShow:1,
-            slidesToScroll:1
-        }
         return (
             <>
                 <div className="w3-card-4 w3-margin w3-white">
@@ -86,7 +77,7 @@ class PostFull extends React.Component {
                         <hr/>
                     </div>
                     <FormComments id={this.props.match.params.id} reload={this.reload}/>
-                    <PublishedComments comments={this.state.comments}/>
+                    <PublishedComments postId={this.props.match.params.id} comments={[]}/>
                 </div>
                 <div className="w3-card-4 w3-margin w3-white">
                     <div className="w3-container">
